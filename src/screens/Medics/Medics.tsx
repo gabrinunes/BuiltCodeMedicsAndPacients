@@ -48,6 +48,8 @@ const Medics: React.FC = () => {
         `v1/mobile/doctors/delete/${id}`,
         config,
       );
+      const filtered = medics.filter(medic => id !== medic.id);
+      setMedics(filtered);
     } catch (error) {
       console.log('error', error);
     }
