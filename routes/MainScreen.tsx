@@ -1,9 +1,11 @@
 import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+
 import Medics from '../src/screens/Medics/Medics';
 import Pacients from '../src/screens/Pacients/Pacients';
-const Tabs: React.FC = () => {
+const MainScreen: React.FC = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator>
@@ -13,4 +15,4 @@ const Tabs: React.FC = () => {
   );
 };
 
-export default Tabs;
+export default MainScreen;

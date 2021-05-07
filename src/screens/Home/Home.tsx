@@ -27,7 +27,6 @@ const Home = () => {
     });
     console.log('dados', response.data.data.accessToken);
     saveSessionToken(response.data.data.accessToken);
-    response.data.success === true ? navigation.navigate('Tabs') : null;
   };
 
   const saveSessionToken = async (sessionKey: string) => {

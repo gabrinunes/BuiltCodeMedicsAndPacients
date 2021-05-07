@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, TouchableOpacity, Alert} from 'react-native';
 
 import Input from '../../components/inputs/index';
+import Button from '../../components/button/index';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import api from '../../services/api';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 
 interface Medics {
   crm: string;
@@ -15,26 +17,12 @@ interface Medics {
 
 const Medics: React.FC = () => {
   const dados = useSelector(state => state.dados);
-  const [name, SetName] = useState<string>('');
-  const [crm, SetCrm] = useState<string>('');
-  const [crmUf, SetCrmUf] = useState<string>('');
+  const navigation = useNavigation();
   const [medics, setMedics] = useState<Medics[]>([]);
   const [loading, setloading] = useState(false);
   const config = {
     headers: {Authorization: `Bearer ${dados}`},
   };
-  // const handleRegister = async () => {
-  //   const response = await api.post(
-  //     'v1/mobile/doctors/create',
-  //     {
-  //       name: 'Beatriz Jenkins',
-  //       crm: '02454896565798',
-  //       crmUf: 'MG',
-  //     },
-  //     config,
-  //   );
-  //   console.log('oq retornou', response);
-  // };
   const handleListMedics = async () => {
     setloading(true);
     const response = await api.get('v1/mobile/doctors/', config);
@@ -57,7 +45,6 @@ const Medics: React.FC = () => {
 
   useEffect(() => {
     handleListMedics();
-    // handleRegister();
   }, [dados]);
 
   const renderItems = ({item}: {item: Medics}) => (
@@ -96,6 +83,10 @@ const Medics: React.FC = () => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <FlatList data={medics} renderItem={renderItems} />
+      <Button
+        label="Cadastrar Médico"
+        onPress={() => navigation.navigate('MedicRegister')}
+      />
     </View>
   );
 };
