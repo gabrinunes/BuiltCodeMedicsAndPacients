@@ -6,6 +6,7 @@ import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import Home from '../src/screens/Home/Home';
 import MedicRegister from '../src/screens/Register/MedicRegister';
+import PatientRegister from '../src/screens/Register/PatitentRegister';
 import MainScreen from './MainScreen';
 const App = createStackNavigator();
 
@@ -34,6 +35,7 @@ const AppRoutes = () => {
           <App.Screen name="Home" component={Home} />
         )}
         <App.Screen name="MedicRegister" component={MedicRegister} />
+        <App.Screen name="PatientRegister" component={PatientRegister} />
       </App.Navigator>
     </NavigationContainer>
   );

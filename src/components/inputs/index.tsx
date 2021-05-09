@@ -9,7 +9,7 @@ interface Props {
 }
 
 const inputs: React.FC<Props> = ({placeholder,onChangeText}) => {
-  return <Input placeholder={placeholder} onChangeText={onChangeText} />;
+  return <Input  placeholder={placeholder} onChangeText={onChangeText} />;
 };
 
 export default inputs;
