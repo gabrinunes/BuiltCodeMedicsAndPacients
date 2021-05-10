@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {useSelector} from 'react-redux';
 import Input from '../../components/inputs/index';
 import Button from '../../components/button/index';
@@ -25,17 +25,24 @@ const PatientRegister: React.FC = () => {
   };
 
   const handleRegisterPatient = async () => {
-    const response = await api.post(
-      'v1/mobile/patients/create',
-      {
-        name: name,
-        birthDate: birth,
-        cpf: cpf,
-        doctorId: docId,
-      },
-      config,
-    );
-    console.log('response,', response);
+    if (name === '' || birth === '' || cpf === '') {
+      Alert.alert('Dados Incompletos', 'Por favor preencha todos os campos', [
+        {text: 'Ok', onPress: () => {}},
+      ]);
+    } else {
+      const response = await api.post(
+        'v1/mobile/patients/create',
+        {
+          name: name,
+          birthDate: birth,
+          cpf: cpf,
+          doctorId: docId,
+        },
+        config,
+      );
+      goBack();
+      console.log('response,', response);
+    }
   };
 
   const parseDate = (birth: string) => {

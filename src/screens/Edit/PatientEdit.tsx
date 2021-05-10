@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Input from '../../components/inputs';
 import Button from '../../components/button';
 import Icon from 'react-native-vector-icons/Feather';
@@ -30,20 +30,26 @@ const PatientEdit: React.FC = () => {
   };
 
   const handleEdit = async () => {
-    try {
-      await api.put(
-        `/v1/mobile/patients/update/${id}`,
-        {
-          name: name,
-          birthDate: birth,
-          cpf: cpf,
-          doctorId: docId,
-        },
-        config,
-      );
-      goBack();
-    } catch (error) {
-      console.log('erro', error);
+    if (name === '' || birth === '' || cpf === '') {
+      Alert.alert('Dados Incompletos', 'Por favor preencha todos os campos', [
+        {text: 'Ok', onPress: () => {}},
+      ]);
+    } else {
+      try {
+        await api.put(
+          `/v1/mobile/patients/update/${id}`,
+          {
+            name: name,
+            birthDate: birth,
+            cpf: cpf,
+            doctorId: docId,
+          },
+          config,
+        );
+        goBack();
+      } catch (error) {
+        console.log('erro', error);
+      }
     }
   };
 
@@ -71,7 +77,7 @@ const PatientEdit: React.FC = () => {
         />
       </View>
       <View style={{alignItems: 'center'}}>
-        <Button label="cadastrar" onPress={() => handleEdit()} />
+        <Button label="editar" onPress={() => handleEdit()} />
       </View>
     </View>
   );

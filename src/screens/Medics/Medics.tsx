@@ -59,7 +59,7 @@ const Medics: React.FC = () => {
   useEffect(() => {
     console.log('dados da store', dados, idDoc);
     handleListMedics();
-  }, [isFocused, dados]);
+  }, [dados, isFocused]);
 
   const renderItems = ({item}: {item: Medics}) => (
     <Platelets

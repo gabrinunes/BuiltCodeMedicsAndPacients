@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Input from '../../components/inputs';
 import Button from '../../components/button';
 import Icon from 'react-native-vector-icons/Feather';
@@ -21,19 +21,25 @@ const MedicEdit: React.FC = () => {
   };
 
   const handleEdit = async () => {
-    try {
-      await api.put(
-        `/v1/mobile/doctors/update/${docId}`,
-        {
-          name: name,
-          crm: crm,
-          crmUf: crmUf,
-        },
-        config,
-      );
-      goBack();
-    } catch (error) {
-      console.log('erro', error);
+    if (name === '' || crm === '' || crmUf === '') {
+      Alert.alert('Dados Incompletos', 'Por favor preencha todos os campos', [
+        {text: 'Ok', onPress: () => {}},
+      ]);
+    } else {
+      try {
+        await api.put(
+          `/v1/mobile/doctors/update/${docId}`,
+          {
+            name: name,
+            crm: crm,
+            crmUf: crmUf,
+          },
+          config,
+        );
+        goBack();
+      } catch (error) {
+        console.log('erro', error);
+      }
     }
   };
 

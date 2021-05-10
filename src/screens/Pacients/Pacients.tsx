@@ -28,6 +28,8 @@ const Pacients: React.FC = () => {
   const isFocused = useIsFocused();
   const [patients, setPatients] = useState<Patients[]>([]);
   const [patientsFilter, setPatientsFilter] = useState<Patients[]>([]);
+  const [filter, setFilter] = useState<boolean>(false);
+  const [filterSearch, setFilterSearch] = useState<boolean>(false);
   const [medics, setMedics] = useState<Medics[]>([]);
   const config = {
     headers: {Authorization: `Bearer ${dados}`},
@@ -48,9 +50,23 @@ const Pacients: React.FC = () => {
   };
 
   const filterPatientsByMedics = (docId: string) => {
-    console.log('value', patients, docId);
+    console.log('docId', patients, docId);
+    setFilterSearch(true);
     const filtered = patients.filter(patient => patient.doctorId === docId);
+    console.log('resultado', filtered);
     setPatientsFilter(filtered);
+  };
+
+  const filterToggle = () => {
+    if (filterSearch === false) {
+      Alert.alert(
+        'Selecione o Médico',
+        'por favor,selecione um médico para filtrar',
+        [{text: 'OK', onPress: () => {}}],
+      );
+    } else {
+      filter ? setFilter(false) : setFilter(true);
+    }
   };
 
   useEffect(() => {
@@ -84,12 +100,24 @@ const Pacients: React.FC = () => {
   return (
     <>
       <Picker onValueChange={value => filterPatientsByMedics(value)}>
+        <Picker.Item label="Selecione um medico" value="" />
         {medics.map(item => (
           <Picker.Item label={item.name} value={item.id} />
         ))}
       </Picker>
+      <View style={{alignItems: 'center'}}>
+        {filter ? (
+          <Button label="Desativar" onPress={() => filterToggle()} />
+        ) : (
+          <Button label="Filtrar" onPress={() => filterToggle()} />
+        )}
+      </View>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <FlatList data={patients} renderItem={renderItems} />
+        {filter ? (
+          <FlatList data={patientsFilter} renderItem={renderItems} />
+        ) : (
+          <FlatList data={patients} renderItem={renderItems} />
+        )}
         <Button label="Cadastrar Paciente" onPress={() => checkPatient()} />
       </View>
     </>

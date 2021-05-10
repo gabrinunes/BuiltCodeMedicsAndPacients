@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Input from '../../components/inputs/index';
 import Button from '../../components/button/index';
@@ -21,20 +21,26 @@ const Register: React.FC = () => {
   };
 
   const handleRegister = async () => {
-    try {
-      const response = await api.post(
-        'v1/mobile/doctors/create',
-        {
-          name: name,
-          crm: crm,
-          crmUf: crmUf,
-        },
-        config,
-      );
-      console.log('response', response.data.data.id);
-      goBack();
-    } catch (error) {
-      console.log('erro', error);
+    if (name === '' || crm === '' || crmUf === '') {
+      Alert.alert('Dados Incompletos', 'Por favor preencha todos os campos', [
+        {text: 'Ok', onPress: () => {}},
+      ]);
+    } else {
+      try {
+        const response = await api.post(
+          'v1/mobile/doctors/create',
+          {
+            name: name,
+            crm: crm,
+            crmUf: crmUf,
+          },
+          config,
+        );
+        console.log('response', response.data.data.id);
+        goBack();
+      } catch (error) {
+        console.log('erro', error);
+      }
     }
   };
 

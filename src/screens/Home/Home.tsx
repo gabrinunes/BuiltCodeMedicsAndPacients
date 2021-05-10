@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Alert} from 'react-native';
 
 import {Input, LoginButton, Container} from './styles';
 import api from '../../services/api';
@@ -19,14 +19,30 @@ interface Response {
 const Home = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('ywKh!ux8Ffnw');
 
   const handleLogin = async () => {
-    const response: Response = await api.post('v1/mobile/auth', {
-      email: 'gn_cunha@hotmail.com',
-      password: 'ywKh!ux8Ffnw',
-    });
-    console.log('dados', response.data.data.accessToken);
-    saveSessionToken(response.data.data.accessToken);
+    if (user === '' || password === '') {
+      Alert.alert('Dados Incompletos', 'Por favor preencha todos os campos', [
+        {text: 'Ok', onPress: () => {}},
+      ]);
+    } else {
+      try {
+        const response: Response = await api.post('v1/mobile/auth', {
+          email: user,
+          password: password,
+        });
+        console.log('dados', response.data.data.accessToken);
+        saveSessionToken(response.data.data.accessToken);
+      } catch (error) {
+        Alert.alert(
+          'Login Invalido :(',
+          'Por favor verifique seu email e senha',
+          [{text: 'ok', onPress: () => {}}],
+        );
+      }
+    }
   };
 
   const saveSessionToken = async (sessionKey: string) => {
@@ -37,8 +53,12 @@ const Home = () => {
   return (
     <Container>
       <Text>Login</Text>
-      <Input placeholder="User" />
-      <Input placeholder="Password" secureTextEntry={true} />
+      <Input placeholder="User" onChangeText={value => setUser(value)} />
+      <Input
+        placeholder="Password"
+        onChangeText={value => setPassword(value)}
+        secureTextEntry={true}
+      />
       <LoginButton onPress={() => handleLogin()}>
         <Text>Login</Text>
       </LoginButton>
