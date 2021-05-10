@@ -3,7 +3,7 @@ import {View, TouchableOpacity, Text, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {Medics} from '../../screens/Medics/Medics';
 import {Patients} from '../../screens/Pacients/Pacients';
-
+import {TouchContainer, TouchInconDelete, TouchInconEdit} from './style';
 // import { Container } from './styles';
 
 interface Props {
@@ -23,16 +23,7 @@ const platelets: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <TouchableOpacity
-        style={{
-          width: 350,
-          alignItems: 'flex-start',
-          height: 90,
-          padding: 10,
-          backgroundColor: 'grey',
-          marginTop: 10,
-          borderRadius: 10,
-        }}>
+      <TouchContainer>
         {isPacient ? (
           <>
             <Text style={{fontSize: 16}}>Pacient:{dataPacients?.name}</Text>
@@ -48,9 +39,9 @@ const platelets: React.FC<Props> = ({
             <Text style={{fontSize: 14}}>CrmUf:{dataMedics?.crmUf}</Text>
           </>
         )}
-      </TouchableOpacity>
+      </TouchContainer>
       {isPacient ? (
-        <TouchableOpacity
+        <TouchInconDelete
           onPress={() =>
             Alert.alert(
               'Excluir Paciente',
@@ -60,12 +51,11 @@ const platelets: React.FC<Props> = ({
                 {text: 'Não', onPress: () => {}},
               ],
             )
-          }
-          style={{position: 'absolute', left: 310, top: 35}}>
+          }>
           <Icon name="trash" size={20} />
-        </TouchableOpacity>
+        </TouchInconDelete>
       ) : (
-        <TouchableOpacity
+        <TouchInconDelete
           onPress={() =>
             Alert.alert(
               'Excluir Medico',
@@ -75,16 +65,15 @@ const platelets: React.FC<Props> = ({
                 {text: 'Não', onPress: () => {}},
               ],
             )
-          }
-          style={{position: 'absolute', left: 310, top: 35}}>
+          }>
           <Icon name="trash" size={20} />
-        </TouchableOpacity>
+        </TouchInconDelete>
       )}
-      <TouchableOpacity
+      <TouchInconEdit
         onPress={onpressEdit}
         style={{position: 'absolute', left: 280, top: 35}}>
         <Icon name="edit" size={20} />
-      </TouchableOpacity>
+      </TouchInconEdit>
     </>
   );
 };
