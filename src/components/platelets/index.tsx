@@ -8,6 +8,7 @@ import {Patients} from '../../screens/Pacients/Pacients';
 
 interface Props {
   onpress(): void;
+  onpressEdit(): void;
   isPacient?: boolean;
   dataMedics?: Medics;
   dataPacients?: Patients;
@@ -16,6 +17,7 @@ interface Props {
 const platelets: React.FC<Props> = ({
   dataPacients,
   onpress,
+  onpressEdit,
   isPacient,
   dataMedics,
 }) => {
@@ -78,7 +80,9 @@ const platelets: React.FC<Props> = ({
           <Icon name="trash" size={20} />
         </TouchableOpacity>
       )}
-      <TouchableOpacity style={{position: 'absolute', left: 280, top: 35}}>
+      <TouchableOpacity
+        onPress={onpressEdit}
+        style={{position: 'absolute', left: 280, top: 35}}>
         <Icon name="edit" size={20} />
       </TouchableOpacity>
     </>

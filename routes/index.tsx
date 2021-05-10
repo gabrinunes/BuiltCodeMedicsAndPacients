@@ -7,6 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import Home from '../src/screens/Home/Home';
 import MedicRegister from '../src/screens/Register/MedicRegister';
 import PatientRegister from '../src/screens/Register/PatitentRegister';
+import PatientEdit from '../src/screens/Edit/PatientEdit';
+import MedicEdit from '../src/screens/Edit/MedicEdit';
 import MainScreen from './MainScreen';
 const App = createStackNavigator();
 
@@ -36,6 +38,8 @@ const AppRoutes = () => {
         )}
         <App.Screen name="MedicRegister" component={MedicRegister} />
         <App.Screen name="PatientRegister" component={PatientRegister} />
+        <App.Screen name="MedicEdit" component={MedicEdit} />
+        <App.Screen name="PatientEdit" component={PatientEdit} />
       </App.Navigator>
     </NavigationContainer>
   );

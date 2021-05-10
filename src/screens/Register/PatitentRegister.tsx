@@ -68,7 +68,11 @@ const PatientRegister: React.FC = () => {
       </View>
       <Picker selectedValue={medics} onValueChange={value => setDocId(value)}>
         {medics.map(item => (
-          <Picker.Item label={`Médico :${item.name}`} value={item.id} />
+          <Picker.Item
+            label={`Médico :${item.name}`}
+            value={item.id}
+            key={item.id}
+          />
         ))}
       </Picker>
       <View style={{alignItems: 'center'}}>

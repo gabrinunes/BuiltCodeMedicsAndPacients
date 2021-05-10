@@ -6,7 +6,11 @@ import Button from '../../components/button/index';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import api from '../../services/api';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {
+  useNavigation,
+  useFocusEffect,
+  useIsFocused,
+} from '@react-navigation/native';
 import Platelets from '../../components/platelets/index';
 export interface Medics {
   crm: string;
@@ -19,6 +23,7 @@ const Medics: React.FC = () => {
   const dados = useSelector(state => state.dados);
   const idDoc = useSelector(state => state.Medics);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const [medics, setMedics] = useState<Medics[]>([]);
   const [loading, setloading] = useState(false);
@@ -54,10 +59,16 @@ const Medics: React.FC = () => {
   useEffect(() => {
     console.log('dados da store', dados, idDoc);
     handleListMedics();
-  }, [dados]);
+  }, [isFocused, dados]);
 
   const renderItems = ({item}: {item: Medics}) => (
-    <Platelets dataMedics={item} onpress={() => deleteDoctor(item.id)} />
+    <Platelets
+      dataMedics={item}
+      onpressEdit={() =>
+        navigation.navigate('MedicEdit', {docId: item.id, medic: item})
+      }
+      onpress={() => deleteDoctor(item.id)}
+    />
   );
 
   return (
