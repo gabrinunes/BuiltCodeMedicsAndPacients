@@ -51,13 +51,13 @@ const Medics: React.FC = () => {
       );
       const filtered = medics.filter(medic => id !== medic.id);
       setMedics(filtered);
+      handleListMedics();
     } catch (error) {
       console.log('error', error);
     }
   };
 
   useEffect(() => {
-    console.log('dados da store', dados, idDoc);
     handleListMedics();
   }, [dados, isFocused]);
 

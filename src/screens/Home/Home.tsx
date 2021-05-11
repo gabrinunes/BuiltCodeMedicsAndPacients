@@ -20,7 +20,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [user, setUser] = useState('');
-  const [password, setPassword] = useState('ywKh!ux8Ffnw');
+  const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     if (user === '' || password === '') {

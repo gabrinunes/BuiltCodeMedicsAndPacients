@@ -13,12 +13,10 @@ import MainScreen from './MainScreen';
 const App = createStackNavigator();
 
 const AppRoutes = () => {
-  const [isLogged, setLogged] = useState<string>(null);
   const dispatch = useDispatch();
-  const dados = useSelector(state => state.dados);
+  const isLogged = useSelector(state => state.dados);
 
   const saveSessionToken = useCallback(async (sessionKey: string) => {
-    setLogged(sessionKey);
     dispatch({type: 'SESSION_KEY', title: sessionKey});
   }, []);
 
@@ -26,12 +24,12 @@ const AppRoutes = () => {
     AsyncStorage.getItem('sessionToken').then(response => {
       response ? saveSessionToken(response) : null;
     });
-  }, []);
+  }, [isLogged]);
 
   return (
     <NavigationContainer>
       <App.Navigator screenOptions={{headerShown: false}}>
-        {isLogged || dados ? (
+        {isLogged ? (
           <App.Screen name="MainScreen" component={MainScreen} />
         ) : (
           <App.Screen name="Home" component={Home} />

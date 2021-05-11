@@ -49,9 +49,13 @@ const Pacients: React.FC = () => {
     } catch (error) {}
   };
 
+  const checkIfMedicExists = () => {
+    medics.length === 0 ? setFilterSearch(false) : null;
+  };
+
   const filterPatientsByMedics = (docId: string) => {
     console.log('docId', patients, docId);
-    setFilterSearch(true);
+    docId ? setFilterSearch(true) : setFilterSearch(false);
     const filtered = patients.filter(patient => patient.doctorId === docId);
     console.log('resultado', filtered);
     setPatientsFilter(filtered);
@@ -71,15 +75,20 @@ const Pacients: React.FC = () => {
 
   useEffect(() => {
     handlePatients();
+    checkIfMedicExists();
     setMedics(medicsList[0].medicsList);
   }, [isFocused]);
 
   const checkPatient = () => {
-    Alert.alert(
-      'Cadastro de Paciente',
-      'O Médico não foi selecionado,por favor selecione o médico na aba Medics :) ',
-      [{text: 'Ok', onPress: () => navigation.navigate('PatientRegister')}],
-    );
+    if (medics.length > 0) {
+      navigation.navigate('PatientRegister');
+    } else {
+      Alert.alert(
+        'Cadastro de Paciente',
+        'Não ha Médicos cadastrados,por favor cadastre um para cadastrar pacientes :( ',
+        [{text: 'Ok', onPress: () => {}}],
+      );
+    }
   };
 
   const renderItems = ({item}: {item: Patients}) => (
