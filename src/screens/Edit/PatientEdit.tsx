@@ -26,10 +26,10 @@ const PatientEdit: React.FC = () => {
 
   const parseDate = (birth: string) => {
     var dateParts = birth.split('/');
-
+    console.log(birth);
     var date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
     console.log('data parsed', date);
-    setBirth(date);
+    birth ? setBirth('') : setBirth(date);
   };
 
   useEffect(() => {
